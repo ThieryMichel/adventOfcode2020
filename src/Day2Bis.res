@@ -1000,28 +1000,30 @@ let input = `14-15 v: vdvvvvvsvvvvvfpv
 16-20 j: vjkjjcjjrjjmtnbjjjnj`;
 
 type entry = {
-    min: option<int>,
-    max: option<int>,
-    matches: option<array<string>>
+    pos1: option<int>,
+    pos2: option<int>,
 }
 
 
 let result = Js.String.split("\n", input) 
     |> Js.Array.map(Js.String.split(": "))
     |> Js.Array.map(([rule, password]) => {
-        let [minString, rest] = Js.String.split("-", rule);
-        let min = Belt.Int.fromString(minString);
+        let [pos1String, rest] = Js.String.split("-", rule);
+        let pos1 = Belt.Int.fromString(pos1String);
 
-        let [maxString, letter] = Js.String.split(" ", rest);
-        let max = Belt.Int.fromString(maxString);
+        let [pos2String, letter] = Js.String.split(" ", rest);
+        let pos2 = Belt.Int.fromString(pos2String);
 
-        let pattern = Js.Re.fromStringWithFlags(letter, ~flags = "g");
-        let matches = Js.String.match_(pattern, password)
 
-        switch({ min: min, max: max, matches: matches }) {
-            | ({ min: Some(min), max: Some(max), matches: Some(matches) }) => {
-                let length = Js.Array.length(matches);
-                length >= min && length <= max;
+        switch({ pos1: pos1, pos2: pos2 }) {
+            | ({ pos1: Some(pos1), pos2: Some(pos2) }) => {
+                let pattern1 = Js.Re.fromString(`^.{${Js.Int.toString(pos1 - 1)}}${letter}`);
+                let pattern2 = Js.Re.fromString(`^.{${Js.Int.toString(pos2 - 1)}}${letter}`);
+
+                let test1 = Js.Re.test(password, pattern1);
+                let test2 = Js.Re.test(password, pattern2);
+
+                (test1 && !test2) || (test2 && !test1)
             }
             | _ => false
         }
