@@ -648,6 +648,5 @@ let rec getAllParentOfNodes = (nodeNames, parents) => {
 
 
 let result = getAllParentOfNodes(["shiny gold"], []) -> Belt.Set.fromArray(~id=module(StringComparator)) -> Belt.Set.size;
-//  -> Js.Array2.length;
 
 Js.log(result);
