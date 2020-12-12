@@ -1160,29 +1160,20 @@ hgt:161cm`;
 
 let whiteSpace = Js.Re.fromString("\s");
 
-let fromPairs = array => Js.Array.map(([key, value]) => (key, value), array) |> Js.Dict.fromArray
-
 let parsePassport = value => {
     Js.String.splitByRe(whiteSpace, value) 
-        |> Js.Array.map(field => {
+        -> Js.Array2.map(field => {
             switch (field) {
-                | Some(value) => Js.String.split(":", value);
-                | None => [];
+                | Some(value) => {
+                    switch(Js.String2.split(value, ":")) {
+                        | [key, value] => (key, value);
+                        | _ => ("", "");
+                    }
+                };
+                | None => ("", "");
             }
-        })
-        |> fromPairs;
-}
-
-// type passport = {
-//     byr: string,
-//     iyr: string,
-//     eyr: string,
-//     hgt: string,
-//     hcl: string,
-//     ecl: string,
-//     pid: string,
-//     cid: string
-// }
+        });
+} -> Js.Dict.fromArray;
 
 let hasValidProp = (key, predicate, passport) => {
     switch (Js.Dict.get(passport, key)) {
@@ -1243,22 +1234,22 @@ let hasValidEyeColor = hasValidProp("ecl", (ecl) => {
 let pidRe = Js.Re.fromString("^[0-9]{9}$");
 let hasValidPid = hasValidProp("pid", (pid) => Js.Re.test_(pidRe, pid));
 
-let hasValidCid = (passport) => true;
+let hasValidCid = (_) => true;
 
 let isPassportValid = passport => {
     hasValidBirthYear(passport)
         && hasValidIssueYear(passport)
         && hasValidExpirationYear(passport)
-        && hasValidHeight(passport) 
+        && hasValidHeight(passport)
         && hasValidHairColor(passport)
         && hasValidEyeColor(passport)
-        && hasValidPid(passport) 
-        && hasValidCid(passport) 
+        && hasValidPid(passport)
+        && hasValidCid(passport)
 }
 
-let parsedInput = Js.String.split("\n\n", input)
-    |> Js.Array.map(parsePassport)
-    |> Js.Array.filter(isPassportValid)
-    |> Js.Array.length;
+let parsedInput = Js.String2.split(input, "\n\n")
+    -> Js.Array2.map(parsePassport)
+    -> Js.Array2.filter(isPassportValid)
+    -> Js.Array2.length;
 
 Js.log(parsedInput);

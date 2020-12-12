@@ -1,3 +1,5 @@
+open Utils;
+
 let input = `shiny purple bags contain 2 pale blue bags, 1 wavy fuchsia bag, 5 pale salmon bags.
 bright gray bags contain 4 dotted coral bags.
 clear chartreuse bags contain 3 dark magenta bags, 3 dull gray bags, 4 dark silver bags.
@@ -602,7 +604,7 @@ let colorDictionary = Js.String2.split(input, "\n")
     let line = Js.String2.replaceByRe(lineRaw, quantityRe, "") 
         -> Js.String2.replaceByRe(dotRe, "")
         -> Js.String2.replaceByRe(bagRe, "");
-    let [node, childrenRaw] = Js.String2.split(line, " contain ");
+    let (node, childrenRaw) = splitInTwo(" contain ", line);
 
     let children = Js.String2.split(childrenRaw, ", ");
 

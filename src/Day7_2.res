@@ -600,11 +600,14 @@ let childrenByNode = Js.String2.split(input, "\n")
 -> Js.Array2.map(lineRaw => {
     let line = Js.String2.replaceByRe(lineRaw, dotRe, "")
         -> Js.String2.replaceByRe(bagRe, "");
-    let [node, childrenRaw] = Js.String2.split(line, " contain ");
+    let (node, childrenRaw) = switch(Js.String2.split(line, " contain ")) {
+        | [a, b] => (a, b);
+        | _ => ("", "");
+    };
 
     let children = switch (childrenRaw) {
         | "no other" => []
-        | children => {
+        | _ => {
             Js.String2.split(childrenRaw, ", ") -> Js.Array2.map(child => {
                 let quantity = Js.String2.charAt(child, 0) -> int_of_string;
                 let name = Js.String2.substringToEnd(child, ~from=2);

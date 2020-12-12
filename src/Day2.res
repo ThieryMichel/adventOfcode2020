@@ -1,3 +1,5 @@
+open Utils;
+
 let input = `14-15 v: vdvvvvvsvvvvvfpv
 3-11 k: kkqkkfkkvkgfknkx
 6-10 j: jjjjjjjjjj
@@ -1007,12 +1009,12 @@ type entry = {
 
 
 let result = Js.String.split("\n", input) 
-    |> Js.Array.map(Js.String.split(": "))
-    |> Js.Array.map(([rule, password]) => {
-        let [minString, rest] = Js.String.split("-", rule);
+    -> Js.Array2.map(splitInTwo(": "))
+    -> Js.Array2.map(((rule, password)) => {
+        let (minString, rest) = splitInTwo("-", rule);
         let min = Belt.Int.fromString(minString);
 
-        let [maxString, letter] = Js.String.split(" ", rest);
+        let (maxString, letter) = splitInTwo(" ", rest);
         let max = Belt.Int.fromString(maxString);
 
         let pattern = Js.Re.fromStringWithFlags(letter, ~flags = "g");

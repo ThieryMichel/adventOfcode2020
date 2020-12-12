@@ -1,3 +1,5 @@
+open Utils;
+
 let input = `14-15 v: vdvvvvvsvvvvvfpv
 3-11 k: kkqkkfkkvkgfknkx
 6-10 j: jjjjjjjjjj
@@ -1004,14 +1006,13 @@ type entry = {
     pos2: option<int>,
 }
 
-
 let result = Js.String.split("\n", input) 
-    |> Js.Array.map(Js.String.split(": "))
-    |> Js.Array.map(([rule, password]) => {
-        let [pos1String, rest] = Js.String.split("-", rule);
+    -> Js.Array2.map(splitInTwo(": "))
+    -> Js.Array2.map(((rule, password)) => {
+        let (pos1String, rest) = splitInTwo("-", rule);
         let pos1 = Belt.Int.fromString(pos1String);
 
-        let [pos2String, letter] = Js.String.split(" ", rest);
+        let (pos2String, letter) = splitInTwo(" ", rest);
         let pos2 = Belt.Int.fromString(pos2String);
 
 
@@ -1020,8 +1021,8 @@ let result = Js.String.split("\n", input)
                 let pattern1 = Js.Re.fromString(`^.{${Js.Int.toString(pos1 - 1)}}${letter}`);
                 let pattern2 = Js.Re.fromString(`^.{${Js.Int.toString(pos2 - 1)}}${letter}`);
 
-                let test1 = Js.Re.test(password, pattern1);
-                let test2 = Js.Re.test(password, pattern2);
+                let test1 = Js.Re.test_(pattern1, password);
+                let test2 = Js.Re.test_(pattern2, password);
 
                 (test1 && !test2) || (test2 && !test1)
             }

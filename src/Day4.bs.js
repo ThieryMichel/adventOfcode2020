@@ -10,35 +10,27 @@ var input = "iyr:2010 ecl:gry hgt:181cm\npid:591597745 byr:1920 hcl:#6b5442 eyr:
 
 var whiteSpace = new RegExp("\\s");
 
-function fromPairs(array) {
-  return Js_dict.fromArray(array.map(function (param) {
-                  if (param.length !== 2) {
-                    throw {
-                          RE_EXN_ID: "Match_failure",
-                          _1: [
-                            "Day4.res",
-                            1163,
-                            38
-                          ],
-                          Error: new Error()
-                        };
+function parsePassport(value) {
+  return Js_dict.fromArray(value.split(whiteSpace).map(function (field) {
+                  if (field === undefined) {
+                    return [
+                            "",
+                            ""
+                          ];
                   }
-                  var key = param[0];
-                  var value = param[1];
+                  var match = field.split(":");
+                  if (match.length !== 2) {
+                    return [
+                            "",
+                            ""
+                          ];
+                  }
+                  var key = match[0];
+                  var value = match[1];
                   return [
                           key,
                           value
                         ];
-                }));
-}
-
-function parsePassport(value) {
-  return fromPairs(value.split(whiteSpace).map(function (field) {
-                  if (field !== undefined) {
-                    return field.split(":");
-                  } else {
-                    return [];
-                  }
                 }));
 }
 
@@ -149,7 +141,7 @@ function hasValidPid(param) {
               }), param);
 }
 
-function hasValidCid(passport) {
+function hasValidCid(param) {
   return true;
 }
 
@@ -167,7 +159,6 @@ console.log(parsedInput);
 
 exports.input = input;
 exports.whiteSpace = whiteSpace;
-exports.fromPairs = fromPairs;
 exports.parsePassport = parsePassport;
 exports.hasValidProp = hasValidProp;
 exports.hasValidBirthYear = hasValidBirthYear;

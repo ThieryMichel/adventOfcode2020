@@ -1,3 +1,5 @@
+open Utils;
+
 let input = `jmp +232
 acc +21
 nop +120
@@ -609,12 +611,8 @@ jmp +1`;
 
 
 let parsedInstructions = Js.String2.split(input, "\n") -> Js.Array2.map(value => {
-    switch(Js.String2.split(value, " ")) {
-        | [] => ("", 0);
-        | [code, arg] => {
-            (code, int_of_string(arg))
-        }
-    }
+    let (code, argString) = splitInTwo(" ", value);
+    (code, int_of_string(argString));
 });
 
 let getNextInstructionIndex = (index, (code, arg)) => {
@@ -622,6 +620,7 @@ let getNextInstructionIndex = (index, (code, arg)) => {
         | "nop" => index + 1;
         | "acc" => index + 1;
         | "jmp" => index + arg;
+        | _ => index + 1;
     }
 }
 
@@ -639,7 +638,7 @@ let instructionIndexSequence = getInstructionIndexSequence(parsedInstructions[0]
 
 let instructionSequences = Js.Array2.map(instructionIndexSequence, index => parsedInstructions[index]);
 
-let accSequences = Js.Array2.filter(instructionSequences, ((code, arg)) => code === "acc");
+let accSequences = Js.Array2.filter(instructionSequences, ((code, _)) => code === "acc");
 let acc = Js.Array2.reduce(accSequences, (acc, (_, arg)) => arg + acc, 0);
 
 Js.log(acc);

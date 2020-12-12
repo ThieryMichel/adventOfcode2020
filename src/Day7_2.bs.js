@@ -13,19 +13,21 @@ var bagRe = new RegExp(" bag(s)?", "g");
 var childrenByNode = input.split("\n").map(function (lineRaw) {
         var line = lineRaw.replace(dotRe, "").replace(bagRe, "");
         var match = line.split(" contain ");
+        var match$1;
         if (match.length !== 2) {
-          throw {
-                RE_EXN_ID: "Match_failure",
-                _1: [
-                  "Day7_2.res",
-                  603,
-                  8
-                ],
-                Error: new Error()
-              };
+          match$1 = [
+            "",
+            ""
+          ];
+        } else {
+          var a = match[0];
+          var b = match[1];
+          match$1 = [
+            a,
+            b
+          ];
         }
-        var node = match[0];
-        var childrenRaw = match[1];
+        var childrenRaw = match$1[1];
         var children = childrenRaw === "no other" ? [] : childrenRaw.split(", ").map(function (child) {
                 var quantity = Caml_format.caml_int_of_string(child.charAt(0));
                 var name = child.substring(2);
@@ -35,7 +37,7 @@ var childrenByNode = input.split("\n").map(function (lineRaw) {
                       ];
               });
         return [
-                node,
+                match$1[0],
                 children
               ];
       }).reduce((function (acc, param) {
