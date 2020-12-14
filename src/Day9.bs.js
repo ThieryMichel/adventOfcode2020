@@ -39,7 +39,7 @@ function findConscutiveNumbersThatSumTo(target, _input) {
     var input = _input;
     var length = input.length;
     if (length === 0) {
-      Js_exn.raiseError("Did not find");
+      Js_exn.raiseError("Did not find solution");
     }
     var match = input.reduce((function (param, number) {
             var i = param[2];

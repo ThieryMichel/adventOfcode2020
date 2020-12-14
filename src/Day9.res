@@ -1025,7 +1025,7 @@ type status = Inferior | Greater | Equal;
 let rec findConscutiveNumbersThatSumTo = (target, input) => {
     let length = Js.Array2.length(input);
     if (length === 0) {
-        Js.Exn.raiseError("Did not find")
+        Js.Exn.raiseError("Did not find solution")
     }
     let (_, status, nbNumber) = Js.Array2.reduce(input, ((total, status, i), number) => {
         switch(status) {
