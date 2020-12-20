@@ -25,41 +25,41 @@ var match = Belt_Array.reduce(parsedInput, [
     ], (function (param, param$1) {
         var number = param$1[1];
         var letter = param$1[0];
-        var south = param[2];
-        var west = param[1];
+        var y = param[2];
+        var x = param[1];
         var dir = param[0];
         switch (letter) {
           case "E" :
               return [
                       dir,
-                      west - number | 0,
-                      south
+                      x - number | 0,
+                      y
                     ];
           case "F" :
               switch (dir) {
                 case "E" :
                     return [
                             dir,
-                            west - number | 0,
-                            south
+                            x - number | 0,
+                            y
                           ];
                 case "N" :
                     return [
                             dir,
-                            west,
-                            south - number | 0
+                            x,
+                            y - number | 0
                           ];
                 case "S" :
                     return [
                             dir,
-                            west,
-                            south + number | 0
+                            x,
+                            y + number | 0
                           ];
                 case "W" :
                     return [
                             dir,
-                            west + number | 0,
-                            south
+                            x + number | 0,
+                            y
                           ];
                 default:
                   return Js_exn.raiseError("unexpected dir");
@@ -74,22 +74,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "S",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "W",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "N",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 case "N" :
@@ -100,22 +100,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "E",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "S",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "W",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 case "S" :
@@ -126,22 +126,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "W",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "N",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "E",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 case "W" :
@@ -152,22 +152,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "N",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "E",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "S",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 default:
@@ -176,8 +176,8 @@ var match = Belt_Array.reduce(parsedInput, [
           case "N" :
               return [
                       dir,
-                      west,
-                      south - number | 0
+                      x,
+                      y - number | 0
                     ];
           case "R" :
               switch (dir) {
@@ -189,22 +189,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "N",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "W",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "S",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 case "N" :
@@ -215,22 +215,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "W",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "S",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "E",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 case "S" :
@@ -241,22 +241,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "E",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "N",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "W",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 case "W" :
@@ -267,22 +267,22 @@ var match = Belt_Array.reduce(parsedInput, [
                         } else {
                           return [
                                   "S",
-                                  west,
-                                  south
+                                  x,
+                                  y
                                 ];
                         }
                       } else {
                         return [
                                 "E",
-                                west,
-                                south
+                                x,
+                                y
                               ];
                       }
                     } else {
                       return [
                               "N",
-                              west,
-                              south
+                              x,
+                              y
                             ];
                     }
                 default:
@@ -291,31 +291,31 @@ var match = Belt_Array.reduce(parsedInput, [
           case "S" :
               return [
                       dir,
-                      west,
-                      south + number | 0
+                      x,
+                      y + number | 0
                     ];
           case "W" :
               return [
                       dir,
-                      west + number | 0,
-                      south
+                      x + number | 0,
+                      y
                     ];
           default:
             return Js_exn.raiseError("Unexpected letter : " + letter);
         }
       }));
 
-var south = match[2];
+var y = match[2];
 
-var west = match[1];
+var x = match[1];
 
-var result = Pervasives.abs(west) + Pervasives.abs(south) | 0;
+var result = Pervasives.abs(x) + Pervasives.abs(y) | 0;
 
 console.log(result);
 
 exports.input = input;
 exports.parsedInput = parsedInput;
-exports.west = west;
-exports.south = south;
+exports.x = x;
+exports.y = y;
 exports.result = result;
 /* parsedInput Not a pure module */
