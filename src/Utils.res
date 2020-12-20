@@ -4,4 +4,4 @@ let splitInTwo = (separator, value) => {
         | [first] => (first, "");
         | _ => ("", "");
     };
-}
+};
