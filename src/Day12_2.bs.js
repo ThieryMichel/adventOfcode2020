@@ -30,97 +30,103 @@ var match = Belt_Array.reduce(parsedInput, [
         var x = param[2];
         var offsetY = param[1];
         var offsetX = param[0];
-        var result;
         switch (letter) {
           case "E" :
-              result = [
-                offsetX + number | 0,
-                offsetY,
-                x,
-                y
-              ];
-              break;
+              return [
+                      offsetX + number | 0,
+                      offsetY,
+                      x,
+                      y
+                    ];
           case "F" :
-              result = [
-                offsetX,
-                offsetY,
-                x + Math.imul(number, offsetX) | 0,
-                y + Math.imul(number, offsetY) | 0
-              ];
-              break;
+              return [
+                      offsetX,
+                      offsetY,
+                      x + Math.imul(number, offsetX) | 0,
+                      y + Math.imul(number, offsetY) | 0
+                    ];
           case "L" :
-              result = number !== 90 ? (
-                  number !== 180 ? (
-                      number !== 270 ? Js_exn.raiseError("Incorrect value for rotation : " + String(number)) : [
-                          -offsetY | 0,
-                          offsetX,
-                          x,
-                          y
-                        ]
-                    ) : [
-                      -offsetX | 0,
-                      -offsetY | 0,
-                      x,
-                      y
-                    ]
-                ) : [
-                  offsetY,
-                  -offsetX | 0,
-                  x,
-                  y
-                ];
-              break;
-          case "N" :
-              result = [
-                offsetX,
-                offsetY - number | 0,
-                x,
-                y
-              ];
-              break;
-          case "R" :
-              result = number !== 90 ? (
-                  number !== 180 ? (
-                      number !== 270 ? Js_exn.raiseError("Incorrect value for rotation : " + String(number)) : [
-                          offsetY,
+              if (number !== 90) {
+                if (number !== 180) {
+                  if (number !== 270) {
+                    return Js_exn.raiseError("Incorrect value for rotation : " + String(number));
+                  } else {
+                    return [
+                            -offsetY | 0,
+                            offsetX,
+                            x,
+                            y
+                          ];
+                  }
+                } else {
+                  return [
                           -offsetX | 0,
+                          -offsetY | 0,
                           x,
                           y
-                        ]
-                    ) : [
-                      -offsetX | 0,
-                      -offsetY | 0,
+                        ];
+                }
+              } else {
+                return [
+                        offsetY,
+                        -offsetX | 0,
+                        x,
+                        y
+                      ];
+              }
+          case "N" :
+              return [
+                      offsetX,
+                      offsetY - number | 0,
                       x,
                       y
-                    ]
-                ) : [
-                  -offsetY | 0,
-                  offsetX,
-                  x,
-                  y
-                ];
-              break;
+                    ];
+          case "R" :
+              if (number !== 90) {
+                if (number !== 180) {
+                  if (number !== 270) {
+                    return Js_exn.raiseError("Incorrect value for rotation : " + String(number));
+                  } else {
+                    return [
+                            offsetY,
+                            -offsetX | 0,
+                            x,
+                            y
+                          ];
+                  }
+                } else {
+                  return [
+                          -offsetX | 0,
+                          -offsetY | 0,
+                          x,
+                          y
+                        ];
+                }
+              } else {
+                return [
+                        -offsetY | 0,
+                        offsetX,
+                        x,
+                        y
+                      ];
+              }
           case "S" :
-              result = [
-                offsetX,
-                offsetY + number | 0,
-                x,
-                y
-              ];
-              break;
+              return [
+                      offsetX,
+                      offsetY + number | 0,
+                      x,
+                      y
+                    ];
           case "W" :
-              result = [
-                offsetX - number | 0,
-                offsetY,
-                x,
-                y
-              ];
-              break;
+              return [
+                      offsetX - number | 0,
+                      offsetY,
+                      x,
+                      y
+                    ];
           default:
-            result = Js_exn.raiseError("Unexpected letter : " + letter);
+            return Js_exn.raiseError("Unexpected letter : " + letter);
         }
-        console.log(result);
-        return result;
       }));
 
 var y = match[3];
